@@ -16,8 +16,6 @@ This repository contains a large file, which cannot be downloaded using the 'Dow
 
 ![Screen shot of file download step 2](Download_step2.jpg)
 
-Alternatively, you can clone the entire repository to your machine using Git or GitHub Desktop.
-
 ## Releases
 
 Release v1.0 corresponds to the code in the published book, without corrections or updates.
