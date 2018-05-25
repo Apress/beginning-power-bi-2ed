@@ -1,0 +1,17 @@
+SELECT DimProduct.ProductKey, 
+DimProduct.ProductAlternateKey, 
+DimProduct.WeightUnitMeasureCode, 
+DimProduct.SizeUnitMeasureCode, 
+DimProduct.EnglishProductName, 
+DimProduct.ListPrice, 
+DimProduct.[Size], 
+DimProduct.SizeRange, 
+DimProduct.Weight, 
+DimProduct.Color, 
+DimProductCategory.EnglishProductCategoryName, 
+DimProductSubcategory.EnglishProductSubcategoryName
+FROM (DimProduct INNER JOIN DimProductSubcategory 
+ON DimProduct.ProductSubcategoryKey = DimProductSubcategory.ProductSubcategoryKey) 
+INNER JOIN DimProductCategory 
+ON DimProductSubcategory.ProductCategoryKey = DimProductCategory.ProductCategoryKey;
+

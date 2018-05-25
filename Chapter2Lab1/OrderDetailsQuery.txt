@@ -1,0 +1,3 @@
+SELECT [Order Details].ID, [Order Details].[Order ID], [Order Details].[Product ID], [Order Details].Quantity, [Order Details].[Unit Price], [Order Details].Discount
+FROM Orders LEFT JOIN [Order Details] ON Orders.[Order ID] = [Order Details].[Order ID]
+WHERE (((Orders.[Status ID])=3));

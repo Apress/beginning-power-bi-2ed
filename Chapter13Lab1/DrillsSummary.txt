@@ -1,0 +1,14 @@
+let
+    Source = Excel.Workbook(File.Contents(FilePath)),
+    #"Removed Other Columns" = Table.SelectColumns(Source,{"Name", "Data"}),
+    #"Added Custom" = Table.AddColumn(#"Removed Other Columns", "TableWithHeaders", each Table.PromoteHeaders([Data])),
+    #"Removed Columns" = Table.RemoveColumns(#"Added Custom",{"Data"}),
+    #"Expanded TableWithHeaders" = Table.ExpandTableColumn(#"Removed Columns", "TableWithHeaders", {"School", "Drill Type", "Date", "Time"}, {"School", "Drill Type", "Date", "Time"}),
+    #"Changed Type" = Table.TransformColumnTypes(#"Expanded TableWithHeaders",{{"Date", type date}, {"Time", type time}}),
+    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Name", "SchoolYear"}}),
+    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns", each ([Drill Type] = DrillType)),
+    #"Sorted Rows" = Table.Sort(#"Filtered Rows",{{"SchoolYear", Order.Ascending}, {"School", Order.Ascending}, {"Drill Type", Order.Ascending}, {"Date", Order.Ascending}}),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Sorted Rows",{{"Date", type text}}),
+    #"Grouped Rows" = Table.Group(#"Changed Type1", {"SchoolYear", "School", "Drill Type"}, {{"Dates", each CombineList([Date]), type text}})
+in
+    #"Grouped Rows"
